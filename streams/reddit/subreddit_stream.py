@@ -1,6 +1,8 @@
 import requests
 import time
 
+from prometheus_client import Counter
+
 
 class SubredditStream:
     DEFAULT_SUBREDDIT = [
@@ -26,6 +28,8 @@ class SubredditStream:
             self.subreddit = self.DEFAULT_SUBREDDIT
         self.on_stream_listener = on_stream_listener
         self.running = True
+        # prometheus Counter
+        self.counter = Counter('reddit_streams_document_received', 'Total number of streams')
 
     def fetch(self):
         if self.on_stream_listener is None:
@@ -40,5 +44,7 @@ class SubredditStream:
                     time.sleep(30)
                     continue
                 for data in resp.json().get('data', {}).get('children', []):
+                    # call counter to increment counts
+                    self.counter.inc()
                     self.on_stream_listener.on_stream_data(data)
                 time.sleep(30)
