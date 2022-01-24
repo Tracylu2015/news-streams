@@ -1,5 +1,6 @@
 from streams.kafka_client import KafkaClient
 from streams.twitter.filtered_stream import TwitterFilteredStream
+from prometheus_client import start_http_server
 
 
 def start_twitter():
@@ -12,4 +13,6 @@ def start_twitter():
 
 
 if __name__ == '__main__':
+    # Start up the server to expose the metrics.
+    start_http_server(8000)
     start_twitter()
