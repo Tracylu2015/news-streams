@@ -28,8 +28,8 @@ class SubredditStream:
             self.subreddit = self.DEFAULT_SUBREDDIT
         self.on_stream_listener = on_stream_listener
         self.running = True
-        # prometheus Counter
-        self.counter = Counter('reddit_streams_document_received', 'Total number of streams')
+        # prometheus Counter and add label names for the 3rd param
+        self.counter = Counter('reddit_streams_document_received', 'Total number of streams', ['source'])
 
     def fetch(self):
         if self.on_stream_listener is None:
@@ -45,6 +45,6 @@ class SubredditStream:
                     continue
                 for data in resp.json().get('data', {}).get('children', []):
                     # call counter to increment counts
-                    self.counter.inc()
+                    self.counter.labels(subreddit).inc()
                     self.on_stream_listener.on_stream_data(data)
                 time.sleep(30)
