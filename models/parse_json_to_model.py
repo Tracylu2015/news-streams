@@ -5,12 +5,6 @@ from dateutil import parser
 
 from models.social_post_model import SocialPost
 
-data = {}
-
-f = open("../json/twitter_media.json")
-jsonfile = json.load(f)
-f.close()
-
 TOP_LEVEL_KEYS = {'created_at', 'id', 'text', 'user', 'entities', 'reply_count', 'retweet_count', 'favorite_count',
                   'retweeted_status'}
 USER_LEVEL_KEYS = {'id', 'screen_name', 'location', 'verified', 'followers_count', 'friends_count', 'profile_image_url'}
@@ -19,6 +13,7 @@ ENTITIES_LEVEL_KEYS = {'hashtags', 'user_mentions'}
 
 def parse_json(jsonObj):
     # print(jsonfile.keys())
+    data = {}
     user_info = {}
     hashtag = defaultdict(list)
     for key in jsonObj.keys():
@@ -64,10 +59,12 @@ def parse_json(jsonObj):
     del data["retweeted_status"]
     del data["user_mentions"]
 
-    twitter_post = SocialPost(type="twitter", **data)
+    twitter_post = SocialPost(source="twitter", **data)
 
-    return twitter_post.__dict__
+    return twitter_post
 
 
 if __name__ == '__main__':
-    pprint(parse_json(jsonfile))
+    with open("../json/twitter_media.json") as f:
+        jsonfile = json.load(f)
+        pprint(parse_json(jsonfile).__dict__)
