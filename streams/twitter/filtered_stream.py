@@ -1,3 +1,4 @@
+import json
 import os
 import tweepy
 from prometheus_client import Counter
@@ -20,4 +21,5 @@ class TwitterFilteredStream(tweepy.Stream):
         # call counter function to increment counts
         self.counter.inc()
         json_attr = getattr(status, '_json')
-        self.producer.on_stream_data("twitter_stream", json_attr)
+        print(json.dumps(json_attr))
+        # self.producer.on_stream_data("twitter_stream", json_attr)
