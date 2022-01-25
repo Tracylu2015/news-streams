@@ -2,6 +2,15 @@ node {
 	stage 'Checkout'
         checkout scm
 
+    stage 'Test'
+        docker.image('python:3.8.12-slim-buster'){
+            //install python dependencies (requirements file)
+            sh 'pip install -r requirements.txt'
+            // run python unittest
+            sh 'PYTHONPATH=. pytest test'
+        }
+
+
 	stage 'Build'
         docker.withRegistry('https://harbor.ww.home', '5a2a36dd-8c89-4aff-bc7b-934726f6b8ef') {
             def dockerRepo = 'dojo/news-streams'
