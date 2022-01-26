@@ -1,0 +1,37 @@
+import os
+
+from confluent_kafka import Consumer
+
+
+class KafkaConsumer():
+
+    def __init__(self):
+        servers = os.getenv('KAFKA_BOOTSTRAP_SERVERS')
+        group = os.getenv('KAFKA_GROUP_CONSUMER')
+        conf = {'bootstrap.servers': servers,
+                'group.id': group,
+                'auto.offset.reset': 'smallest'}
+
+        self.consumer = Consumer(conf)
+        self.running = True
+
+    # basic poll loop
+    def basic_consume_loop(self, topics):
+        try:
+            self.consumer.subscribe(topics)
+            while self.running:
+                msg = self.consumer.poll(timeout=1.0)
+                if msg is None:
+                    continue
+                if msg.error():
+                    print(msg.error())
+                    continue
+                else:
+                    # yield  is used like return, function will return a generator
+                    yield msg
+        finally:
+            # Close down consumer to commit final offsets.
+            self.consumer.close()
+
+    def shutdown(self):
+        self.running = False

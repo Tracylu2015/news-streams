@@ -21,5 +21,4 @@ class TwitterFilteredStream(tweepy.Stream):
         # call counter function to increment counts
         self.counter.inc()
         json_attr = getattr(status, '_json')
-        print(json.dumps(json_attr))
-        # self.producer.on_stream_data("twitter_stream", json_attr)
+        self.producer.on_stream_data("twitter_stream", json_attr)

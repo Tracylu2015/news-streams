@@ -5,7 +5,7 @@ from confluent_kafka import Producer
 from streams.stream_data import StreamData
 
 
-class KafkaClient(StreamData):
+class KafkaProducer(StreamData):
     def __init__(self):
         # get kafka host from environment variable
         servers = os.getenv('KAFKA_BOOTSTRAP_SERVERS')

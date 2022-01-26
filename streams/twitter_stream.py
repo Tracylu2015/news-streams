@@ -1,10 +1,10 @@
-from streams.kafka_client import KafkaClient
+from streams.kafka_producer import KafkaProducer
 from streams.twitter.filtered_stream import TwitterFilteredStream
 from prometheus_client import start_http_server
 
 
 def start_twitter():
-    producer = KafkaClient()
+    producer = KafkaProducer()
     test = TwitterFilteredStream(producer)
     test.filter(languages=['en'], track=['#stock', '#nasdq', '#nyse',
                                          '#stocks', '#stockmarket', '#stockstowatch',

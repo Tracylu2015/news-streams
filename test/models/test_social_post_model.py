@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from models.parse_json_to_model import parse_json
+from models.parse_json_to_model import parse_twitter_stream
 from models.social_post_model import UserInfo
 
 
@@ -13,7 +13,7 @@ class TestParseModel(unittest.TestCase):
             self.json_obj = json.load(file)
 
     def test_parse_model(self):
-        data = parse_json(self.json_obj)
+        data = parse_twitter_stream(self.json_obj)
         self.assertEqual(data.id, 1485817898056953857)
         self.assertEqual(len(data.hashtag), 4)
         self.assertIsInstance(data.user_info, UserInfo)

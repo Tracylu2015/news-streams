@@ -11,7 +11,7 @@ USER_LEVEL_KEYS = {'id', 'screen_name', 'location', 'verified', 'followers_count
 ENTITIES_LEVEL_KEYS = {'hashtags', 'user_mentions'}
 
 
-def parse_json(jsonObj):
+def parse_twitter_stream(jsonObj):
     # print(jsonfile.keys())
     data = {}
     user_info = {}
@@ -67,4 +67,4 @@ def parse_json(jsonObj):
 if __name__ == '__main__':
     with open("../json/twitter_media.json") as f:
         jsonfile = json.load(f)
-        pprint(parse_json(jsonfile).__dict__)
+        pprint(parse_twitter_stream(jsonfile).__dict__)
