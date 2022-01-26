@@ -10,8 +10,7 @@ node {
             sh 'PYTHONPATH=. pytest test --junit-xml=test-results.xml'
 
             // Fix change files permission to jenkins user
-            sh 'chown 106:112 test-results.xml'
-            sh 'chown 106:112 -R .pytest_cache && chown 106:112 -R test'
+            sh 'chown 106:112 -R .'
         }
 
 
