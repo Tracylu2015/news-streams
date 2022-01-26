@@ -3,7 +3,7 @@ import os
 from confluent_kafka import Consumer
 
 
-class KafkaConsumer():
+class KafkaConsumer:
 
     def __init__(self):
         servers = os.getenv('KAFKA_BOOTSTRAP_SERVERS')
