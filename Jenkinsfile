@@ -22,20 +22,5 @@ node {
             def pythonImage = docker.build("${dockerRepo}:python-${env.BUILD_ID}", "-f ${pythonDockerfile} .")
             pythonImage.push()
         }
-//
-//     post
-//         changed {
-//             script {
-//                 if (currentBuild.currentResult == 'FAILURE') { // Other values: SUCCESS, UNSTABLE
-//                     // Send an email only if the build status has changed from green/unstable to red
-//                     emailext subject: "Failed CI Job: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-//                         body: '$DEFAULT_CONTENT',
-//                         recipientProviders: [
-//                             [$class: 'DevelopersRecipientProvider']
-//                         ],
-//                         replyTo: '$DEFAULT_REPLYTO',
-//                         to: '$DEFAULT_RECIPIENTS'
-//                 }
-//             }
-//         }
+
 }

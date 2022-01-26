@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: news-stream
+  name: tweeter-stream-producer
+  labels:
+    app: news-stream
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-stream
+  template:
+    metadata:
+      labels:
+        app: news-stream
+    spec:
+      containers:
+        - name: tweeter-stream-producer
+          image: harbor.ww.home/dojo/news-streams:python-19
+          env:
+            - name: CONSUMER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: twitter-secret
+                  key: CONSUMER_KEY
+            - name: CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twitter-secret
+                  key: CONSUMER_SECRET
+            - name: ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: twitter-secret
+                  key: ACCESS_TOKEN
+            - name: ACCESS_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twitter-secret
+                  key: ACCESS_TOKEN_SECRET
+            - name: BEARER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: twitter-secret
+                  key: BEARER_TOKEN
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "192.168.31.43:9092"
+            - name: PYTHONPATH
+              value: "."
+          command:
+            - python3
+          args:
+            - /src/streams/twitter_stream.py

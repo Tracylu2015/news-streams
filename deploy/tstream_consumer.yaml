@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: news-stream
+  name: tweeter-stream-consumer
+  labels:
+    app: news-stream
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-stream
+  template:
+    metadata:
+      labels:
+        app: news-stream
+    spec:
+      containers:
+        - name: tweeter-stream-consumer
+          image: harbor.ww.home/dojo/news-streams:python-29
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_URI
+            - name: KAFKA_GROUP_CONSUMER
+              value: "consumer_group"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "192.168.31.43:9092"
+            - name: PYTHONPATH
+              value: "."
+          command:
+            - python3
+          args:
+            - /src/streams/kafka_main.py
