@@ -14,10 +14,11 @@ class TestParseModel(unittest.TestCase):
 
     def test_parse_model(self):
         data = parse_twitter_stream(self.json_obj)
-        self.assertEqual(data.id, 1485817898056953857)
-        self.assertEqual(len(data.hashtag), 4)
+        self.assertEqual(data.post_id, 1485817898056953857)
+        self.assertEqual(len(data.hashtags), 4)
         self.assertIsInstance(data.user_info, UserInfo)
         self.assertEqual(data.media_url, "https://pbs.twimg.com/media/FJz4iDQakAE_-Xw.jpg")
+        self.assertEqual(data.user_mentions, [1348300561104265217, 1454415315673227267])
 
 
 if __name__ == '__main__':

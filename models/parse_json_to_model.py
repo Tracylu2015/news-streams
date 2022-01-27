@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from pprint import pprint
 from dateutil import parser
 
@@ -9,13 +8,13 @@ TOP_LEVEL_KEYS = {'created_at', 'id', 'text', 'user', 'entities', 'reply_count',
                   'retweeted_status'}
 USER_LEVEL_KEYS = {'id', 'screen_name', 'location', 'verified', 'followers_count', 'friends_count', 'profile_image_url'}
 ENTITIES_LEVEL_KEYS = {'hashtags', 'user_mentions'}
-
+CLEANUP_KEYS = ['id', 'user', 'entities', 'retweeted_status']
 
 def parse_twitter_stream(jsonObj):
     # print(jsonfile.keys())
     data = {}
     user_info = {}
-    hashtag = defaultdict(list)
+    hashtags = []
     for key in jsonObj.keys():
         if key in TOP_LEVEL_KEYS:
             data[key] = jsonObj[key]
@@ -27,12 +26,12 @@ def parse_twitter_stream(jsonObj):
         if k in ENTITIES_LEVEL_KEYS:
             data[k] = v
 
-    user_info["user_mentions"] = []
+    user_mentions = []
     for ele in data["user_mentions"]:
-        user_info["user_mentions"].append(ele["id"])
+        user_mentions.append(ele["id"])
 
     for ele in data["hashtags"]:
-        hashtag["hashtags"].append(ele["text"])
+        hashtags.append(ele["text"])
 
     tid = data.get("retweeted_status", {}).get("id")
     if tid:
@@ -51,13 +50,13 @@ def parse_twitter_stream(jsonObj):
             break
 
     data["user_info"] = user_info
-    data["hashtag"] = hashtag["hashtags"]
+    data["hashtags"] = hashtags
+    data["user_mentions"] = user_mentions
+    data["post_id"] = data["id"]
     data["created_at"] = parser.parse(data["created_at"])
-    del data["user"]
-    del data["entities"]
-    del data["hashtags"]
-    del data["retweeted_status"]
-    del data["user_mentions"]
+    for key in CLEANUP_KEYS:
+        if key in data:
+            del data[key]
 
     twitter_post = SocialPost(source="twitter", **data)
 
