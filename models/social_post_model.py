@@ -4,7 +4,7 @@ from mongoengine import *
 class UserInfo(DynamicEmbeddedDocument):
     followers_count = IntField()
     friends_count = IntField()
-    id = IntField()
+    id = StringField()
     location = StringField()
     profile_image_url = StringField()
     screen_name = StringField()
@@ -14,7 +14,7 @@ class UserInfo(DynamicEmbeddedDocument):
 class SocialPost(DynamicDocument):
     id = ObjectIdField()
     user_info = EmbeddedDocumentField(UserInfo, fields='user_info')
-    user_mentions = ListField(IntField())
+    user_mentions = ListField(StringField())
     created_at = DateTimeField()
     post_id = StringField()
     text = StringField()

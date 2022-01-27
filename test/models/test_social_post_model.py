@@ -16,7 +16,8 @@ class TestParseModel(unittest.TestCase):
         data = parse_twitter_stream(self.json_obj)
         self.assertEqual(data.post_id, '1485817898056953857')
         self.assertIsInstance(data.user_info, UserInfo)
-        self.assertEqual(data.user_mentions, [1348300561104265217, 1454415315673227267])
+        self.assertEqual(data.user_info.id, '892722632142995457')
+        self.assertEqual(data.user_mentions, ['1348300561104265217', '1454415315673227267'])
         self.assertEqual(data.created_at, datetime(2022, 1, 25, 3, 32, 46, tzinfo=tzutc()))
         self.assertEqual(data.text,
                          'RT @Jay90566398: #Facts  JOIN BEFORE WE TAKE OFF 🥷🥷🔥🔥STILL SUPER EARLY‼️‼️ @Shib_nobi #SHINJA #SHINJAISTHENEXT1000X #Shibnobi')
@@ -29,7 +30,6 @@ class TestParseModel(unittest.TestCase):
         self.assertEqual(len(data.hashtags), 4)
         self.assertEqual(data.hashtags, ['Facts', 'SHINJA', 'SHINJAISTHENEXT1000X', 'Shibnobi'])
         self.assertEqual(data.media_url, 'https://pbs.twimg.com/media/FJz4iDQakAE_-Xw.jpg')
-        self.assertEqual(data.user_mentions, [1348300561104265217, 1454415315673227267])
 
     def test_parse_reddit_post(self):
         with open('json/reddit_post.json') as file:

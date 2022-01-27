@@ -28,7 +28,7 @@ def parse_twitter_stream(jsonObj):
 
     user_mentions = []
     for ele in data["user_mentions"]:
-        user_mentions.append(ele["id"])
+        user_mentions.append(str(ele["id"]))
 
     for ele in data["hashtags"]:
         hashtags.append(ele["text"])
@@ -49,6 +49,7 @@ def parse_twitter_stream(jsonObj):
             data["media_url"] = media_url
             break
 
+    user_info['id'] = str(user_info['id'])
     data["user_info"] = user_info
     data["hashtags"] = hashtags
     data["user_mentions"] = user_mentions
