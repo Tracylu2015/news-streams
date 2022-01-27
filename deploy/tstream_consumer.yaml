@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: tweeter-stream-consumer
-          image: harbor.ww.home/dojo/news-streams:python-32
+          image: harbor.ww.home/dojo/news-streams:python-37
           env:
             - name: MONGODB_URI
               valueFrom:
