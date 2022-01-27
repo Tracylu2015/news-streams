@@ -53,11 +53,6 @@ def parse_twitter_stream(jsonObj):
     data["user_info"] = user_info
     data["hashtag"] = hashtag["hashtags"]
     data["created_at"] = parser.parse(data["created_at"])
-    del data["user"]
-    del data["entities"]
-    del data["hashtags"]
-    del data["retweeted_status"]
-    del data["user_mentions"]
 
     twitter_post = SocialPost(source="twitter", **data)
 
