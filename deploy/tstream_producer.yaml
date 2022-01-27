@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: tweeter-stream-producer
-          image: harbor.ww.home/dojo/news-streams:python-37
+          image: harbor.ww.home/dojo/news-streams:python-45
           env:
             - name: CONSUMER_KEY
               valueFrom:
