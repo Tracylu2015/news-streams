@@ -20,7 +20,7 @@ class SubredditStream:
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/39.0.2171.95 Safari/537.36'}
 
-    def __init__(self, on_stream_listener, subreddit) -> None:
+    def __init__(self, subreddit, on_stream_listener) -> None:
         super().__init__()
         if subreddit is not None:
             self.subreddit = subreddit

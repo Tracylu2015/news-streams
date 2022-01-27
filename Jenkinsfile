@@ -3,11 +3,11 @@ node {
         checkout scm
 
     stage 'Test'
-        docker.image('python:3.8.12-slim-buster').inside('-u 106:112') {
+        docker.image('python:3.8.12-slim-buster').inside('-e HOME=/tmp -u 106:112') {
             //install python dependencies (requirements file)
             sh '/usr/local/bin/pip install -r requirements.txt'
             // run python unittest
-            sh 'PYTHONPATH=. pytest test --junit-xml=test-results.xml'
+            sh 'PYTHONPATH=. $HOME/.local/bin/pytest test --junit-xml=test-results.xml'
         }
         junit 'test-results.xml'
 

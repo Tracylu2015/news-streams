@@ -1,7 +1,7 @@
 from mongoengine import *
 
 
-class UserInfo(EmbeddedDocument):
+class UserInfo(DynamicEmbeddedDocument):
     followers_count = IntField()
     friends_count = IntField()
     id = IntField()
@@ -11,13 +11,14 @@ class UserInfo(EmbeddedDocument):
     verified = BooleanField()
 
 
-class SocialPost(Document):
+class SocialPost(DynamicDocument):
     id = ObjectIdField()
     user_info = EmbeddedDocumentField(UserInfo, fields='user_info')
     user_mentions = ListField(IntField())
     created_at = DateTimeField()
-    post_id = IntField()
+    post_id = StringField()
     text = StringField()
+    title = StringField()
     hashtags = ListField(StringField())
     original_url = StringField()
     retweet_count = IntField()

@@ -52,7 +52,7 @@ def parse_twitter_stream(jsonObj):
     data["user_info"] = user_info
     data["hashtags"] = hashtags
     data["user_mentions"] = user_mentions
-    data["post_id"] = data["id"]
+    data["post_id"] = str(data["id"])
     data["created_at"] = parser.parse(data["created_at"])
     for key in CLEANUP_KEYS:
         if key in data:

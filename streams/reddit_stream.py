@@ -7,7 +7,7 @@ from prometheus_client import start_http_server
 
 def start_reddit():
     producer = KafkaProducer()
-    stream = SubredditStream(os.getenv('SUBREDDIT', 'CryptoCurrency'), producer)
+    stream = SubredditStream(os.getenv('SUBREDDIT', ['CryptoCurrency']), producer)
     stream.fetch()
     producer.on_stream_terminate()
 

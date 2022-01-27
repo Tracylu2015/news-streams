@@ -605,10 +605,10 @@
     "display": "twitter.com/DerinAjah/stat\u2026"
   },
   "is_quote_status": true,
-  "quote_count": 0,
-  "reply_count": 0,
-  "retweet_count": 0,
-  "favorite_count": 0,
+  "quote_count": 6,
+  "reply_count": 3,
+  "retweet_count": 1,
+  "favorite_count": 5,
   "entities": {
     "hashtags": [
       {
