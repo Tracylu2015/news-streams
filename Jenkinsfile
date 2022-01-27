@@ -3,14 +3,11 @@ node {
         checkout scm
 
     stage 'Test'
-        docker.image('python:3.8.12-slim-buster').inside('-u root:root') {
+        docker.image('python:3.8.12-slim-buster').inside('-u 106:112') {
             //install python dependencies (requirements file)
             sh '/usr/local/bin/pip install -r requirements.txt'
             // run python unittest
             sh 'PYTHONPATH=. pytest test --junit-xml=test-results.xml'
-
-            // Fix change files permission to jenkins user
-            sh 'chown 106:112 -R .'
         }
         junit 'test-results.xml'
 
