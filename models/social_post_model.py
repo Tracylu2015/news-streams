@@ -13,9 +13,10 @@ class UserInfo(EmbeddedDocument):
 
 
 class SocialPost(Document):
+    id = ObjectIdField()
     user_info = EmbeddedDocumentField(UserInfo)
     created_at = DateTimeField()
-    id = IntField()
+    post_id = IntField()
     text = StringField()
     hashtag = ListField(StringField())
     original_url = StringField()
@@ -29,7 +30,7 @@ class SocialPost(Document):
     def __init__(self, source, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.created_at = kwargs.get('created_at')
-        self.id = kwargs.get('id')
+        self.post_id = kwargs.get('id')
         self.text = kwargs.get('text')
         self.user_info = UserInfo(**kwargs.get('user_info'))
         self.hashtag = kwargs.get('hashtag')
