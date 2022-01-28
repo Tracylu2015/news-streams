@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: tstream-backendapi
-          image: harbor.ww.home/dojo/news-streams:python-70
+          image: harbor.ww.home/dojo/news-streams:django-70
           ports:
             - name: readiness-port
               containerPort: 8000

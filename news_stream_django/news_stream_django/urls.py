@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 
-import views
+from . import views
 
 urlpatterns = [
     path('api/', include('backend_api.urls')),
