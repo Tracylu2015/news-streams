@@ -21,6 +21,17 @@ spec:
       containers:
         - name: tstream-backendapi
           image: harbor.ww.home/dojo/news-streams:python-49
+          ports:
+            - name: readiness-port
+              containerPort: 8000
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: readiness-port
+            failureThreshold: 2
+            periodSeconds: 30
+
           env:
             - name: MONGODB_URI
               valueFrom:
@@ -32,4 +43,5 @@ spec:
           command:
             - python3
           args:
-            - /src/news_stream_django/manage.py
+            - /src/manage.py
+            - runserver
