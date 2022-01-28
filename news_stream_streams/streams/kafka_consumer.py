@@ -1,6 +1,7 @@
 import os
 
 from confluent_kafka import Consumer
+from prometheus_client import Counter
 
 
 class KafkaConsumer:
@@ -14,11 +15,13 @@ class KafkaConsumer:
 
         self.consumer = Consumer(conf)
         self.running = True
+        self.counter = Counter('twitter_streams_consumer_processed', 'Total consumed tweets')
 
     # basic poll loop
     def basic_consume_loop(self, topics):
         try:
             self.consumer.subscribe(topics)
+
             while self.running:
                 msg = self.consumer.poll(timeout=1.0)
                 if msg is None:
@@ -28,6 +31,7 @@ class KafkaConsumer:
                     continue
                 else:
                     # yield  is used like return, function will return a generator
+                    self.counter.inc()
                     yield msg
         finally:
             # Close down consumer to commit final offsets.
