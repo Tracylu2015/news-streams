@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: news-stream
-  name: tweeter-stream-producer
+  name: tstream-producer
   labels:
     app: news-stream
 spec:
@@ -18,7 +18,7 @@ spec:
         app: news-stream
     spec:
       containers:
-        - name: tweeter-stream-producer
+        - name: tstream-producer
           image: harbor.ww.home/dojo/news-streams:python-48
           env:
             - name: CONSUMER_KEY

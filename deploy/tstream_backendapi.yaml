@@ -2,35 +2,34 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: news-stream
-  name: tstream-consumer
+  name: tstream-backendapi
   labels:
     app: news-stream
+    component: backend-api
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: news-stream
+      component: backend-api
   template:
     metadata:
       labels:
         app: news-stream
+        component: backend-api
     spec:
       containers:
-        - name: tstream-consumer
-          image: harbor.ww.home/dojo/news-streams:python-48
+        - name: tstream-backendapi
+          image: harbor.ww.home/dojo/news-streams:python-49
           env:
             - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: MONGO_URI
-            - name: KAFKA_GROUP_CONSUMER
-              value: "consumer_group"
-            - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "192.168.31.43:9092"
             - name: PYTHONPATH
               value: "."
           command:
             - python3
           args:
-            - /src/streams/kafka_main.py
+            - /src/news_stream_django/manage.py

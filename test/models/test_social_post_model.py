@@ -28,7 +28,7 @@ class TestParseModel(unittest.TestCase):
         self.assertEqual(data.retweeted_id, None)
         self.assertEqual(data.source, 'twitter')
         self.assertEqual(len(data.hashtags), 4)
-        self.assertEqual(data.hashtags, ['Facts', 'SHINJA', 'SHINJAISTHENEXT1000X', 'Shibnobi'])
+        self.assertEqual(data.hashtags, ['FACTS', 'SHINJA', 'SHINJAISTHENEXT1000X', 'SHIBNOBI'])
         self.assertEqual(data.media_url, 'https://pbs.twimg.com/media/FJz4iDQakAE_-Xw.jpg')
 
     def test_parse_reddit_post(self):
