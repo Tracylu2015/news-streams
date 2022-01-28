@@ -40,18 +40,19 @@ pipeline {
                 }
             }
         }
+    }
 
-        post
-            failure {
-                script {
-                    emailext subject: "Failed CI Job: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                        body: '$DEFAULT_CONTENT',
-                        recipientProviders: [
-                            [$class: 'DevelopersRecipientProvider']
-                        ],
-                        replyTo: '$DEFAULT_REPLYTO',
-                        to: '$DEFAULT_RECIPIENTS'
-                }
+    post {
+        failure {
+            script {
+                emailext subject: "Failed CI Job: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                    body: '$DEFAULT_CONTENT',
+                    recipientProviders: [
+                        [$class: 'DevelopersRecipientProvider']
+                    ],
+                    replyTo: '$DEFAULT_REPLYTO',
+                    to: '$DEFAULT_RECIPIENTS'
             }
         }
+    }
 }
