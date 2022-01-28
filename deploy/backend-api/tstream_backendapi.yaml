@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: tstream-backendapi
-          image: harbor.ww.home/dojo/news-streams:django-72
+          image: harbor.ww.home/dojo/news-streams:django-76
           ports:
             - name: readiness-port
               containerPort: 8000
@@ -32,6 +32,7 @@ spec:
               path: /health
               port: readiness-port
             failureThreshold: 2
+            initialDelaySeconds: 10
             periodSeconds: 30
 
           env:
@@ -47,3 +48,4 @@ spec:
           args:
             - /src/manage.py
             - runserver
+            - 0.0.0.0:8000
