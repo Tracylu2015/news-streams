@@ -12,12 +12,17 @@ spec:
       app: news-stream
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
       labels:
         app: news-stream
     spec:
       containers:
         - name: tstream-consumer
-          image: harbor.ww.home/dojo/news-streams:python-48
+          image: harbor.ww.home/dojo/news-streams:stream-58
+          ports:
+            - name: prometheus-port
+              containerPort: 8000
           env:
             - name: MONGODB_URI
               valueFrom:
