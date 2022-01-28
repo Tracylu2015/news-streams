@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: tstream-producer
-          image: harbor.ww.home/dojo/news-streams:stream-58
+          image: harbor.ww.home/dojo/news-streams:stream-70
           ports:
             - name: prometheus-port
               containerPort: 8000
