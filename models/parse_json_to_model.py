@@ -31,7 +31,7 @@ def parse_twitter_stream(jsonObj):
         user_mentions.append(str(ele["id"]))
 
     for ele in data["hashtags"]:
-        hashtags.append(ele["text"])
+        hashtags.append(ele["text"].upper())
 
     tid = data.get("retweeted_status", {}).get("id")
     if tid:

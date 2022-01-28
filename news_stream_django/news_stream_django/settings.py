@@ -70,9 +70,7 @@ WSGI_APPLICATION = 'news_stream_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# mongo_host = os.getenv("MONGODB_URI")
-mongo_host = "mongodb://newsstreams2022:7ExHGAvezFtGr3NPkdsJR4@192.168.31.39:27017/news-streams?authSource=admin" \
-             "&readPreference=primary&directConnection=true&ssl=false"
+mongo_host = os.getenv("MONGODB_URI")
 
 MONGODB_DATABASES = {
     "default": {
