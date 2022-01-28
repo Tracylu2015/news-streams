@@ -65,6 +65,6 @@ def parse_twitter_stream(jsonObj):
 
 
 if __name__ == '__main__':
-    with open("../json/twitter_media.json") as f:
+    with open("json/twitter_media.json") as f:
         jsonfile = json.load(f)
         pprint(parse_twitter_stream(jsonfile).__dict__)

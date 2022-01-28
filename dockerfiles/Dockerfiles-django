@@ -6,10 +6,10 @@ RUN apt-get update && apt-get install librdkafka-dev python3-dev -y
 
 WORKDIR /src
 
-COPY requirements.txt .
+COPY news_stream_django/requirements.txt .
 
 RUN pip3 install -r requirements.txt
 
-COPY . /src
+COPY news_stream_django /src
 
 ENTRYPOINT ["python3"]
