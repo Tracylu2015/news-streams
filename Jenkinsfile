@@ -41,15 +41,23 @@ pipeline {
             }
         }
 
-        stage('Deploy Dry run') {
-            steps {
-                dir("deploy/news-streams") {
-                    sh "kustomize edit set image harbor.ww.home/dojo/news-streams=harbor.ww.home/dojo/news-streams:stream-${env.BUILD_ID}"
-                    sh 'kustomize build . '
+        stage('Deploy Kubernetes') {
+            parallel {
+                stage('Deploy news-streams') {
+                    steps {
+                        dir("deploy/news-streams") {
+                            sh "kustomize edit set image harbor.ww.home/dojo/news-streams=harbor.ww.home/dojo/news-streams:stream-${env.BUILD_ID}"
+                            sh 'kustomize build . | kubectl apply -f -'
+                        }
+                    }
                 }
-                dir("deploy/backend-api") {
-                    sh "kustomize edit set image harbor.ww.home/dojo/news-streams=harbor.ww.home/dojo/news-streams:django-${env.BUILD_ID}"
-                    sh 'kustomize build . '
+                stage('Deploy backend-api') {
+                    steps {
+                        dir("deploy/backend-api") {
+                            sh "kustomize edit set image harbor.ww.home/dojo/news-streams=harbor.ww.home/dojo/news-streams:django-${env.BUILD_ID}"
+                            sh 'kustomize build . | kubectl apply -f -'
+                        }
+                    }
                 }
             }
         }
