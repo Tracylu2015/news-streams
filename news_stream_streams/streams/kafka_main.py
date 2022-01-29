@@ -1,6 +1,7 @@
 import json
 
 from models.parse_json_to_model import parse_twitter_stream
+from prometheus_client import start_http_server
 from streams.kafka_consumer import KafkaConsumer
 
 
@@ -16,4 +17,5 @@ def start_consumer():
 
 
 if __name__ == '__main__':
+    start_http_server(8000)
     start_consumer()
