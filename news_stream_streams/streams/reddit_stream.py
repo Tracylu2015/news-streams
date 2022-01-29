@@ -1,13 +1,16 @@
+import logging
 import os
 
-from streams.kafka_producer import KafkaProducer
-from streams.reddit.subreddit_stream import SubredditStream
+from kafka_producer import KafkaProducer
+from reddit.subreddit_stream import SubredditStream
 from prometheus_client import start_http_server
 
 
 def start_reddit():
+    logging.basicConfig(level=logging.getLevelName(os.getenv('LOG_LEVEL', 'DEBUG').upper()))
+
     producer = KafkaProducer()
-    stream = SubredditStream(os.getenv('SUBREDDIT', ['CryptoCurrency']), producer)
+    stream = SubredditStream(os.getenv('SUBREDDIT'), producer)
     stream.fetch()
     producer.on_stream_terminate()
 

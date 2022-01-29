@@ -24,7 +24,7 @@ spec:
           image: harbor.ww.home/dojo/news-streams:stream-72
           ports:
             - name: prometheus-port
-              containerPort: 8000
+              containerPort: 8080
           env:
             - name: CONSUMER_KEY
               valueFrom:
