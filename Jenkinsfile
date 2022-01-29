@@ -1,6 +1,7 @@
 pipeline {
     agent any
-    stages {
+
+    stages {    //CI including test and build dockerfiles
         stage('Test Streams') {
             agent {
                 docker {
@@ -40,8 +41,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy Kubernetes') {
+        stage('Deploy Kubernetes') {         // CD for deployment
             parallel {
                 stage('Deploy news-streams') {
                     steps {

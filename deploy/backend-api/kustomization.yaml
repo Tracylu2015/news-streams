@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - tstream_backendapi.yaml
+- tstream_ingress.yaml
 images:
 - name: harbor.ww.home/dojo/news-streams
   newName: harbor.ww.home/dojo/news-streams
-  newTag: django-1000

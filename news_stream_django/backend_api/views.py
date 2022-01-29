@@ -21,35 +21,32 @@ def index(request):
 
 
 def trending(request):
-    data = {
-        "BITCOIN": 12230,
-        "CRYPTO": 12184,
-        "CRYPTOCURRENCY": 3683,
-        "NFT": 3425,
-        "BTC": 839,
-        "ETH": 688,
-        "NFTCOMMUNITY": 654,
-        "AIRDROP": 623,
-        "BSCGEM": 598,
-        "NFTGIVEAWAY": 543,
-        "NFTS": 517,
-        "GAMING": 503,
-        "SHIBFENINU": 474,
-        "DEFI": 408,
-        "SUSTAINABLE": 406,
-        "GRN": 405,
-        "BINANCE": 338,
-        "METAVERSE": 331,
-        "BSC": 321,
-        "NFTCOLLECTOR": 317,
-        "CRYPTOGIVEAWAY": 307,
-        "SHIBA": 307,
-        "BLOCKCHAIN": 306,
-        "NFTGIVEAWAYS": 298,
-        "DOGECOIN": 256
-    }
-    # counter = collections.Counter()
-    # for k, v in data.items():
-    #     k = k.upper()
-    #     counter[k] += counter.get(k, 0) + v
-    return JsonResponse(data)
+    data = [
+        {"name": "BITCOIN", "count": 12230},
+        {"name": "CRYPTO", "count": 12184},
+        {"name": "CRYPTOCURRENCY", "count": 3683},
+        {"name": "NFT", "count": 3425},
+        {"name": "BTC", "count": 839},
+        {"name": "ETH", "count": 688},
+        {"name": "NFTCOMMUNITY", "count": 654},
+        {"name": "AIRDROP", "count": 623},
+        {"name": "BSCGEM", "count": 598},
+        {"name": "NFTGIVEAWAY", "count": 543},
+        {"name": "NFTS", "count": 517},
+        {"name": "GAMING", "count": 503},
+        {"name": "SHIBFENINU", "count": 474},
+        {"name": "DEFI", "count": 408},
+        {"name": "SUSTAINABLE", "count": 406},
+        {"name": "GRN", "count": 405},
+        {"name": "BINANCE", "count": 338},
+        {"name": "METAVERSE", "count": 331},
+        {"name": "BSC", "count": 321},
+        {"name": "NFTCOLLECTOR", "count": 317},
+        {"name": "CRYPTOGIVEAWAY", "count": 307},
+        {"name": "SHIBA", "count": 307},
+        {"name": "BLOCKCHAIN", "count": 306},
+        {"name": "NFTGIVEAWAYS", "count": 298},
+        {"name": "DOGECOIN", "count": 256}
+    ]
+
+    return JsonResponse(data, safe=False)
