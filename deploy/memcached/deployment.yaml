@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    component: memcached
+  name: memcached
+  namespace: news-stream
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: memcached
+  serviceName: memcached
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9150'
+      labels:
+        component: memcached
+    spec:
+      containers:
+        - name: memcached
+          image: memcached:1.6.13
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2100Mi
+            requests:
+              cpu: 100m
+              memory: 1000Mi
+          ports:
+            - containerPort: 11211
+              protocol: TCP
+          args:
+            - -m 2000
+            - -I 1M
+        - name: memcached-exporter
+          image: prom/memcached-exporter
+          ports:
+            - containerPort: 9150
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: memcached
+  name: memcached-headless
+  namespace: news-stream
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    component: memcached
+  ports:
+    - name: memcached
+      port: 11211
+      protocol: TCP
+      targetPort: 11211
