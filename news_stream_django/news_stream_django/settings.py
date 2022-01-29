@@ -27,8 +27,9 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '192.168.31.31',
-    'news-stream.spookyai.com'
+    '192.168.31.*',
+    '10.10.*.*',
+    '*.spookyai.com'
 ]
 
 # Application definition

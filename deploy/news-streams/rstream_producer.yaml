@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: rstream-producer
-          image: harbor.ww.home/dojo/news-streams:stream-94
+          image: harbor.ww.home/dojo/news-streams:stream-95
           ports:
             - name: prometheus-port
               containerPort: 8080

@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - tstream_consumer.yaml
   - tstream_producer.yaml
+  - rstream_producer.yaml
