@@ -2,7 +2,7 @@ FROM python:3.8.12-slim-buster
 
 USER root
 
-RUN apt-get update && apt-get install librdkafka-dev python3-dev -y
+RUN apt-get update && apt-get install curl -y
 
 WORKDIR /src
 

@@ -25,13 +25,8 @@ SECRET_KEY = 'django-insecure-6tqw1vtu+)#6bh%c@6jpc*rv-p82)ucho6#+82#!)=t&r%i)jv
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '192.168.31.*',
-    '10.10.*.*',
-    '*.spookyai.com'
+    '*'
 ]
-
 # Application definition
 
 INSTALLED_APPS = [
