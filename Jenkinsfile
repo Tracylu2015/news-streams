@@ -51,6 +51,14 @@ pipeline {
                         }
                     }
                 }
+                stage('Deploy news-streams-reddit') {
+                    steps {
+                        dir("deploy/news-streams-reddit") {
+                            sh "kustomize edit set image harbor.ww.home/dojo/news-streams=harbor.ww.home/dojo/news-streams:stream-${env.BUILD_ID}"
+                            sh 'kustomize build . | kubectl apply -f -'
+                        }
+                    }
+                }
                 stage('Deploy backend-api') {
                     steps {
                         dir("deploy/backend-api") {
