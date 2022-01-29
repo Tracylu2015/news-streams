@@ -89,5 +89,5 @@ class SubredditStream:
         if result:
             self.dedup_counter.labels(subreddit).inc()
             return True
-        self.cache_client.set(post_id, exptime=time.time()+self.reddit_dedup_ttl)
+        self.cache_client.set(post_id, time.time(), expire=self.reddit_dedup_ttl)
         return False
