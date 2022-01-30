@@ -9,8 +9,10 @@ class KafkaConsumer:
     def __init__(self):
         servers = os.getenv('KAFKA_BOOTSTRAP_SERVERS')
         group = os.getenv('KAFKA_GROUP_CONSUMER')
+        auto_commit = os.getenv('KAFKA_AUTO_COMMIT', 'True') == 'True'
         conf = {'bootstrap.servers': servers,
                 'group.id': group,
+                'enable.auto.commit': auto_commit,
                 'auto.offset.reset': 'smallest'}
 
         self.consumer = Consumer(conf)

@@ -11,7 +11,6 @@ def parse_reddit_post(data):
     :param data: json response from reddit
     :return: SocialPost obj
     '''
-    data = data.get('data', {})
     user_info = {
         'screen_name': data.get('author', '')
     }
