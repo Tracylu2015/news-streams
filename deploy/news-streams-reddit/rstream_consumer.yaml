@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: rstream-consumer
-          image: harbor.ww.home/dojo/news-streams:stream-72
+          image: harbor.ww.home/dojo/news-streams:stream-125
           ports:
             - name: prometheus-port
               containerPort: 8000
