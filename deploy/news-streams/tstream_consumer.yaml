@@ -33,6 +33,8 @@ spec:
               value: "consumer_group"
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: "192.168.31.43:9092"
+            - name: ELASTIC_HOST
+              value: "elastic.ww.home"
             - name: PYTHONPATH
               value: "."
           command:
