@@ -38,8 +38,6 @@ spec:
               value: "86400"
             - name: REDDIT_PAGE_SIZE
               value: "30"
-            - name: PYTHONPATH
-              value: "."
             - name: LOG_LEVEL
               value: "INFO"
           command:

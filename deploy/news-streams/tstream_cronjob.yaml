@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tstream-cronjob
+spec:
+  schedule: "*/30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: tstream-cronjob
+              image: harbor.ww.home/dojo/news-streams:stream-72
+              imagePullPolicy: IfNotPresent
+              command:
+                - python3
+              args:
+                - /src/mongo_query/aggregate_hashtags.py
+              env:
+                - name: MEMCACHED_SERVICE
+                  value: memcached-headless.news-stream.svc.cluster.local
+                - name: PYTHONPATH
+                  value: "."
+                - name: MONGODB_URI
+                  valueFrom:
+                    secretKeyRef:
+                      name: mongodb-secret
+                      key: MONGO_URI
+          restartPolicy: OnFailure
