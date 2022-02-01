@@ -1,10 +1,11 @@
 import json
 import os
 import socket
-from pymemcache.client.hash import HashClient
-from datetime import timedelta
 from datetime import datetime
+from datetime import timedelta
+
 import pymongo
+from pymemcache.client.hash import HashClient
 
 pipeline = [
     {
@@ -87,9 +88,14 @@ def update_trending_tags():
     cache_address = socket.gethostbyname_ex(os.getenv('MEMCACHED_SERVICE'))[-1]
     # pymemcache to choose which server to set/get the values from.
     # It will also automatically rebalance depending on if a server goes down.
-    cache_client = HashClient(cache_address)
+    cache_client = HashClient(
+        servers=cache_address,
+        allow_unicode_keys=True,
+        no_delay=True,
+        ignore_exc=True
+    )
     # save into cache
-    cache_client.set("top_appeared_tags", json.dumps(data))
+    cache_client.set("top_appeared_tags", data)
 
 
 if __name__ == '__main__':

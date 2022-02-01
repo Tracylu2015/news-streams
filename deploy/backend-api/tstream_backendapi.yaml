@@ -43,6 +43,8 @@ spec:
                   key: MONGO_URI
             - name: PYTHONPATH
               value: "."
+            - name: DEBUG
+              value: "False"
             - name: MEMCACHED_SERVICE
               value: memcached-headless.news-stream.svc.cluster.local
           command:
