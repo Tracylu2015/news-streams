@@ -4,6 +4,8 @@ django-mongoengine==0.4.6
 django-prometheus==2.2.0
 mongoengine==0.23.1
 prometheus-client==0.13.1
+pymemcache==3.5.0
 pymongo==3.12.3
 pytz==2021.3
+six==1.16.0
 sqlparse==0.4.2
