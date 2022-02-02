@@ -44,7 +44,7 @@ def trending(request):
 
 
 es = Elasticsearch(
-    [{"host": os.getenv("ELASTICHOST")}]
+    [{"host": os.getenv("ELASTIC_HOST")}]
 )
 
 
