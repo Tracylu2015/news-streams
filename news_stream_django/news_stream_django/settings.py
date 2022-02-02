@@ -122,6 +122,12 @@ CACHES = {
     }
 }
 
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'elastic.ww.home:9200/'
+    },
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

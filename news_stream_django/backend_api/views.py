@@ -5,9 +5,10 @@ import os
 import socket
 
 from django.http.response import JsonResponse
-from django.core.cache import caches
 from pymemcache.client.hash import HashClient
-from django.shortcuts import render
+from elasticsearch import Elasticsearch
+from elasticsearch_dsl import Search
+import os
 
 # Create your views here.
 from django.http import HttpResponse
@@ -24,6 +25,7 @@ cache_client = HashClient(
     max_pool_size=4
 )
 
+
 def index(request):
     posts = SocialPost.objects.limit(5)
     data = []
@@ -39,3 +41,26 @@ def trending(request):
     if data:
         return JsonResponse(json.loads(data), safe=False)
     return JsonResponse({}, safe=False)
+
+
+es = Elasticsearch(
+    [{"host": os.getenv("ELASTICHOST")}]
+)
+
+
+def tags(request, para):
+    # para is a url parameter passed from frontend
+    s = Search(using=es, index="tstream-post-*")
+    # TODO: only project post_id
+    s = s.query("simple_query_string", query=para, fields=['title', 'text'])
+    response = s.execute()
+    # a list of post_id return from elastic search
+    data = []
+    for hit in response:
+        data.append(hit.post_id)
+    posts = SocialPost.find({"post_id": {"$in": data}}).objects
+    result = []
+    for p in posts:
+        p = json.loads((p.to_json()))
+        result.append(p)
+    return JsonResponse(result, safe=False)
