@@ -48,11 +48,11 @@ es = Elasticsearch(
 )
 
 
-def tags(request, para):
+def tags(request, tag):
     # para is a url parameter passed from frontend
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
-    s = s.query("simple_query_string", query=para, fields=['title', 'text'])
+    s = s.query("simple_query_string", query=tag, fields=['title', 'text'])
     response = s.execute()
     # a list of post_id return from elastic search
     data = []
