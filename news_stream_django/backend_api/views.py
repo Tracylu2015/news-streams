@@ -58,7 +58,8 @@ def tags(request, tag):
     data = []
     for hit in response:
         data.append(hit.post_id)
-    posts = SocialPost.find({"post_id": {"$in": data}}).objects
+    posts = SocialPost.objects(post_id__in=data)
+
     result = []
     for p in posts:
         p = json.loads((p.to_json()))
