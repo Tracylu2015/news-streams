@@ -95,7 +95,7 @@ def update_trending_tags():
         ignore_exc=True
     )
     # save into cache
-    cache_client.set("top_appeared_tags", data)
+    cache_client.set("top_appeared_tags", json.dumps(data))
 
 
 if __name__ == '__main__':

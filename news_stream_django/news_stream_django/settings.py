@@ -122,11 +122,11 @@ CACHES = {
     }
 }
 
-ELASTICSEARCH_DSL={
-    'default': {
-        'hosts': 'elastic.ww.home:9200/'
-    },
-}
+# ELASTICSEARCH_DSL={
+#     'default': {
+#         'hosts': 'elastic.ww.home'
+#     },
+# }
 
 LOGGING = {
     'version': 1,
