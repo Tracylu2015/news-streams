@@ -35,6 +35,10 @@
     
 ## news_stream_frontend
    - React command to run on Android 
+    '''
+    npm run android
+    
+    '''
 
 
 ## news_stream_streams

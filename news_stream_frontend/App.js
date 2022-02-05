@@ -1,45 +1,35 @@
 
 import React from 'react';
-import TrendList from './components/TrendList';
-import Head from './components/Head';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import TrendScreen from './components/TrendScreen';
+import TweetScreen from './components/TweetScreen';
 
-} from 'react-native';
 
-import {
-  Colors,
 
-} from 'react-native/Libraries/NewAppScreen';
-
+const Stack = createNativeStackNavigator();
 
 const App = () => {
 
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    flex: 1,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
-      <Head />
-      <SafeAreaView
-        contentInsetAdjustmentBehavior="automatic"
-        style={{marginBottom: 50}}>
-        <TrendList />
-      </SafeAreaView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={TrendScreen} options={{
+          title: 'Top Trending',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold', 
+          },
+          headerTitleAlign: 'center',
+        }} />
+        <Stack.Screen name="Tweets" component={TweetScreen} />
+      </Stack.Navigator>
+    </NavigationContainer >
   );
 };
 
-const styles = StyleSheet.create({
-
-});
 
 export default App;

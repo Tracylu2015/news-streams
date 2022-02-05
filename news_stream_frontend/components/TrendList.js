@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, FlatList, StatusBar, StyleSheet, Text, Pressable } from "react-native";
 
-const TrendList = () => {
+const TrendList = ({ navigation }) => {
     const baseUrl = 'https://news-stream.spookyai.com';
     const [trends, setTrends] = useState([])
 
@@ -25,55 +25,64 @@ const TrendList = () => {
         return () => source.cancel("Data fetching cancelled");
     }, []);
 
-    const [selectedName, setSelectedName] = useState("");
 
-    const Item = ({ item, onPress, backgroundColor, textColor }) => (
-        <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-            <Text style={[styles.title,  textColor]}>{item.name} </Text>
-            <Text style={[styles.title,  textColor]}>{item.count} </Text>
-        </TouchableOpacity>
+    const Item = ({ title }) => (
+        <View style={styles.item}>
+            <Text style={styles.title}>{title}</Text>
+        </View>
     );
 
-    const renderItem = ({ item }) => {
-        const backgroundColor = item.name === selectedName ? "#6e3b6e" : "#f9c2ff";
-        const color = item.name === selectedName ? 'white' : 'black';
 
-        return (
-            <Item
-                item={item}
-                onPress={() => setSelectedName(item.name)}
-                backgroundColor={{ backgroundColor }}
-                textColor={{ color }}
-            />
-        );
-    };
+    const onPressNav = (item)=>{
+        let tag = item.name
+        console.log(item.name)
+        navigation.navigate('Tweets', {tag})
+    }
+    const renderItem = ({ item }) => (
+        <Pressable onPress={() => onPressNav(item)}>
+            <View style={styles.item}>
+                <Item title={item.name} />
+                <View>
+                    <Item title={item.count} style={styles.row} />
+                </View>
+            </View>
+        </Pressable>
+    );
 
     return (
         <FlatList
             data={trends}
             renderItem={renderItem}
-            keyExtractor={(item) => item.name}
-            extraData={selectedName}
+            keyExtractor={item => item.name}
+            onPress={onPressNav}
         />
+
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: StatusBar.currentHeight || 0,
     },
+
     item: {
-        padding: 20,
+        backgroundColor: '#8529cd',
+        padding: 10,
         marginVertical: 6,
         marginHorizontal: 8,
         flex: 1,
-        flexDirection: "row",
-        justifyContent:'space-between'
+        flexDirection: 'row',
+
+    },
+    row: {
+        justifyContent: 'flex-end'
     },
     title: {
-        fontSize: 22,
+        fontSize: 24,
     },
 });
+
+
 
 export default TrendList;
