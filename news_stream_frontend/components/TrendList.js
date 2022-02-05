@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
 
     item: {
-        backgroundColor: '#8529cd',
+        backgroundColor: '#aaaaaa',
         padding: 10,
         marginVertical: 6,
         marginHorizontal: 8,
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
+        color: '#111122'
     },
 });
 

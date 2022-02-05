@@ -80,7 +80,7 @@ const TagList = ({ tag }) => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: '#8529cd',
+        backgroundColor: '#aaaaaa',
         padding: 4,
         marginVertical: 6,
         marginHorizontal: 8,
