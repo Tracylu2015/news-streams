@@ -32,36 +32,40 @@ const TagList = ({ tag }) => {
             <Text style={styles.title}>{item}</Text>
         </View>
     );
-
-    const renderItem = ({ item }) => (
+    
+    const ProfileItem = ({ item }) => (
         <View style={styles.item}>
+            <Text style={styles.screenName}>{item}</Text>
+        </View>
+    );
+    
+    const renderItem = ({ item }) => (
+        
+        <View style={[styles.item, styles.elevation]}>
             <View style={styles.profile}>
-                <Image style={styles.tinyLogo} source={{ uri: item.user_info.profile_image_url }} />
-                <Item item={item.user_info.screen_name} />
-            </View>
-            <View>
-                <Item item={item.user_info.create_at} />
+                <Image style={styles.tinyLogo} source={item.user_info.profile_image_url == "" ? require("./images/t_icon.png") : { uri: item.user_info.profile_image_url }} />
+                <View>
+                    <ProfileItem item={item.user_info.screen_name} />
+                </View>
             </View>
             <View>
                 <Item item={item.text} />
             </View>
+            <View  >
+                <Item item={item.created_at["$date"]} />
+            </View>
             <View style={styles.row} >
                 <View style={styles.row}>
-                    <Text style={styles.text}>
-                        Favorite:
-                    </Text>
+                    <Image style={styles.icon} source={require("./images/fav.png")} />
                     <Item item={item.favorite_count} />
                 </View >
                 <View style={styles.row}>
-                    <Text style={styles.text}>
-                        Retweet:
-                    </Text>
+                    <Image style={styles.icon} source={require("./images/retweet.png")} />
+
                     <Item item={item.retweet_count} />
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.text}>
-                        Reply:
-                    </Text>
+                    <Image style={styles.icon} source={require("./images/reply.png")} />
                     <Item item={item.reply_count} />
                 </View>
             </View>
@@ -80,10 +84,15 @@ const TagList = ({ tag }) => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: '#aaaaaa',
+        backgroundColor: '#dedede',
         padding: 4,
-        marginVertical: 6,
-        marginHorizontal: 8,
+        marginVertical: 10,
+        marginHorizontal: 10,
+        borderRadius: 8,
+    },
+    elevation: {
+        elevation: 15,
+        shadowColor: '#000022',
     },
     title: {
         fontSize: 16,
@@ -92,11 +101,7 @@ const styles = StyleSheet.create({
     row: {
         flex: 1,
         flexDirection: 'row',
-    },
-    text: {
-        marginLeft: 15,
-        fontSize: 16,
-        color: '#000022'
+        alignItems: 'center',
     },
     tinyLogo: {
         width: 50,
@@ -105,9 +110,20 @@ const styles = StyleSheet.create({
     profile: {
         flex: 1,
         flexDirection: 'row',
-        marginLeft:16,
-        paddingTop: 20
+        marginLeft: 16,
+        paddingTop: 20,
+        alignItems: 'center'
     },
+    icon: {
+        width: 30,
+        height: 30,
+        marginLeft: 15,
+    },
+    screenName: {
+        fontWeight: 'bold',
+        fontSize: 24,
+        color: '#000022',
+    }
 })
 
 export default TagList;

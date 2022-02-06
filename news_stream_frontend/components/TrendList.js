@@ -38,7 +38,7 @@ const TrendList = ({ navigation }) => {
     }
     const renderItem = ({ item }) => (
         <Pressable onPress={() => onPressNav(item)}>
-            <View style={styles.item}>
+            <View style={[styles.item, styles.elevation]}>
                 <Item title={item.name} />
                 <View>
                     <Item title={item.count} style={styles.row} />
@@ -71,7 +71,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
         flex: 1,
         flexDirection: 'row',
-
+        borderRadius: 8
+    },
+    elevation: {
+        elevation: 5,
+        shadowColor: '#000022',
     },
     row: {
         justifyContent: 'flex-end'

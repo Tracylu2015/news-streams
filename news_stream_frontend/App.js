@@ -21,11 +21,21 @@ const App = () => {
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
-            fontWeight: 'bold', 
+            fontWeight: 'bold',
           },
           headerTitleAlign: 'center',
         }} />
-        <Stack.Screen name="Tweets" component={TweetScreen} />
+        <Stack.Screen name="Tweets" component={TweetScreen} options={{
+          title: 'Hot Tweets',
+          headerStyle: {
+            backgroundColor: "rgb(29, 155, 240)",
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center',
+        }} />
       </Stack.Navigator>
     </NavigationContainer >
   );
