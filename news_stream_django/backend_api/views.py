@@ -65,12 +65,14 @@ def tags(request, tag):
         {
         "followers_count": "desc"
     },
-        "_score")[:50]
+        "_score")
     response = s.execute()
     # a list of post_id return from elastic search
     data = []
     for hit in response:
         data.append(hit.post_id)
+    if len(data)> 30:
+        data = data[:30]
     posts = SocialPost.objects(post_id__in=data)
 
     result = []
