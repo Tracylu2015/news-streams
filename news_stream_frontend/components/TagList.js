@@ -38,6 +38,25 @@ const TagList = ({ tag }) => {
             <Text style={styles.screenName}>{item}</Text>
         </View>
     );
+    const [timeDiff, setTimeDiff] = useState("now")
+    const TimeDiff = ({ item }) => {
+        var timeDiff = null
+        now = new Date().getTime()
+        post_time = item.created_at["$date"]
+        diff = Math.floor(now - post_time) / 1000
+        if (0 <= diff < 60) {
+            setTimeDiff("now");
+        }
+        else if (60 < diff < 3600) {
+            setTimeDiff(Math.floor(diff / 60) + "min" + "ago");
+        }
+        else if (3600 <= diff <= 86400) {
+            setTimeDiff(Math.floor(diff / 3660) + "hour" + "ago");
+        }
+        else {
+            setTimeDiff(item.created_at["$date"].toUTCString())
+        }
+    }
 
     const renderItem = ({ item }) => (
         <View style={[styles.item, styles.elevation]}>
@@ -54,10 +73,13 @@ const TagList = ({ tag }) => {
                 <Item item={item.text} />
             </View>
             <View>
-                {item.media_url !=="" ?<Image styles={styles.tImage} source={{ uri: item.media_url }} />: null}
+                {item.media_url !== "" ? <Image styles={styles.tImage} source={{ uri: item.media_url }} /> : null}
             </View>
             <View>
                 <Item item={new Date(item.created_at["$date"]).toUTCString()} />
+            </View>
+            <View>
+                <Text>{timeDiff}</Text>
             </View>
             <View style={styles.row} >
                 <View style={styles.row}>

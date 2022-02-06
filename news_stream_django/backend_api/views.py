@@ -58,12 +58,12 @@ def tags(request, tag):
         }
     },
         {
-        "friends_count": {
+        "user_info.friends_count": {
             "order": "desc"
         }
     },
         {
-        "followers_count": "desc"
+        "user_info.followers_count": "desc"
     },
         "_score")
     response = s.execute()
