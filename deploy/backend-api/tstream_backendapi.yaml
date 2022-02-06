@@ -48,7 +48,7 @@ spec:
             - name: MEMCACHED_SERVICE
               value: memcached-headless.news-stream.svc.cluster.local
             - name: ELASTIC_HOST
-              value: "elastic.ww.home."
+              value: "192.168.31.45"
           command:
             - python3
           args:

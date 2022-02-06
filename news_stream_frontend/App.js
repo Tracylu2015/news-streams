@@ -17,7 +17,7 @@ const App = () => {
         <Stack.Screen name="Home" component={TrendScreen} options={{
           title: 'Top Trending',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: "rgb(29, 155, 240)",
           },
           headerTintColor: '#fff',
           headerTitleStyle: {

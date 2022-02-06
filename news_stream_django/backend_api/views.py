@@ -52,7 +52,20 @@ def tags(request, tag):
     # para is a url parameter passed from frontend
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
-    s = s.query("simple_query_string", query=tag, fields=['title', 'text'])
+    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort({
+        "created_at.$date": {
+            "order": "desc"
+        }
+    },
+        {
+        "retweet_count": {
+            "order": "desc"
+        }
+    },
+        {
+        "reply_count": "desc"
+    },
+        "_score")[:50]
     response = s.execute()
     # a list of post_id return from elastic search
     data = []

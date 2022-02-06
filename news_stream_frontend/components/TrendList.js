@@ -12,7 +12,6 @@ const TrendList = ({ navigation }) => {
         const fetchTrends = async () => {
             try {
                 const response = await axios.get(url, { cancelToken: source.token });
-                // console.log(response.data);
                 setTrends([...response.data])
 
             } catch (error) {
@@ -35,7 +34,6 @@ const TrendList = ({ navigation }) => {
 
     const onPressNav = (item)=>{
         let tag = item.name
-        console.log(item.name)
         navigation.navigate('Tweets', {tag})
     }
     const renderItem = ({ item }) => (
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
     },
 
     item: {
-        backgroundColor: '#aaaaaa',
+        backgroundColor: '#ceeefe',
         padding: 10,
         marginVertical: 6,
         marginHorizontal: 8,
