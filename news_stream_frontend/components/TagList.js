@@ -32,41 +32,46 @@ const TagList = ({ tag }) => {
             <Text style={styles.title}>{item}</Text>
         </View>
     );
-    
+
     const ProfileItem = ({ item }) => (
         <View style={styles.item}>
             <Text style={styles.screenName}>{item}</Text>
         </View>
     );
-    
+
     const renderItem = ({ item }) => (
-        
         <View style={[styles.item, styles.elevation]}>
             <View style={styles.profile}>
                 <Image style={styles.tinyLogo} source={item.user_info.profile_image_url == "" ? require("./images/t_icon.png") : { uri: item.user_info.profile_image_url }} />
                 <View>
                     <ProfileItem item={item.user_info.screen_name} />
                 </View>
+                <View>
+                    <Image style={styles.icon} source={item.user_info.verified === true ? require("./images/verified.png") : ""} />
+                </View>
             </View>
             <View>
                 <Item item={item.text} />
             </View>
-            <View  >
-                <Item item={item.created_at["$date"]} />
+            <View>
+                <Image styles={styles.tImage} source={{ uri: item.media_url }} />
             </View>
+            <View  >
+                <Item item={new Date(item.created_at["$date"]).toUTCString()} />
+            </View>
+
             <View style={styles.row} >
                 <View style={styles.row}>
-                    <Image style={styles.icon} source={require("./images/fav.png")} />
-                    <Item item={item.favorite_count} />
+                    <Item item={item.user_info.followers_count} />
+                    <Text style={styles.text}>
+                        followers
+                    </Text>
                 </View >
                 <View style={styles.row}>
-                    <Image style={styles.icon} source={require("./images/retweet.png")} />
-
-                    <Item item={item.retweet_count} />
-                </View>
-                <View style={styles.row}>
-                    <Image style={styles.icon} source={require("./images/reply.png")} />
-                    <Item item={item.reply_count} />
+                    <Item item={item.user_info.friends_count} />
+                    <Text style={styles.text}>
+                        friends
+                    </Text>
                 </View>
             </View>
         </View>
@@ -77,7 +82,6 @@ const TagList = ({ tag }) => {
             data={tweet}
             renderItem={renderItem}
             keyExtractor={item => item.post_id}
-        // onPress={onPressNav}
         />
     );
 };
@@ -103,6 +107,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    text: {
+        fontSize: 16,
+        color: '#000022',
+    },
     tinyLogo: {
         width: 50,
         height: 50,
@@ -114,15 +122,18 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         alignItems: 'center'
     },
-    icon: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-    },
     screenName: {
         fontWeight: 'bold',
         fontSize: 24,
         color: '#000022',
+    },
+    icon: {
+        width: 20,
+        height: 20,
+    },
+    tImage: {
+        width: 100,
+        height: 200,
     }
 })
 

@@ -58,12 +58,12 @@ def tags(request, tag):
         }
     },
         {
-        "retweet_count": {
+        "friends_count": {
             "order": "desc"
         }
     },
         {
-        "reply_count": "desc"
+        "followers_count": "desc"
     },
         "_score")[:50]
     response = s.execute()

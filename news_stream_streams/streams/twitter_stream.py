@@ -6,9 +6,8 @@ from prometheus_client import start_http_server
 def start_twitter():
     producer = KafkaProducer()
     test = TwitterFilteredStream(producer)
-    test.filter(languages=['en'], track=['#stock', '#nasdq', '#nyse',
-                                         '#stocks', '#stockmarket', '#stockstowatch',
-                                         '#crypto', '#bitcoin', '#cryptocurrency'])
+    test.filter(languages=['en'], track=['#stock', '#nasdq', '#nyse', '#stocks',
+                '#stockmarket', '#stockstowatch', '#crypto', '#bitcoin', '#cryptocurrency'])
     producer.on_stream_terminate()
 
 
