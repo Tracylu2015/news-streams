@@ -42,24 +42,23 @@ const TagList = ({ tag }) => {
     const renderItem = ({ item }) => (
         <View style={[styles.item, styles.elevation]}>
             <View style={styles.profile}>
-                <Image style={styles.tinyLogo} source={item.user_info.profile_image_url == "" ? require("./images/t_icon.png") : { uri: item.user_info.profile_image_url }} />
+                <Image style={styles.tinyLogo} source={{ uri: item.user_info.profile_image_url }} />
                 <View>
                     <ProfileItem item={item.user_info.screen_name} />
                 </View>
                 <View>
-                    <Image style={styles.icon} source={item.user_info.verified === true ? require("./images/verified.png") : ""} />
+                    {item.user_info.verified === true ? <Image style={styles.icon} source={require("./images/verified.png")} /> : null}
                 </View>
             </View>
             <View>
                 <Item item={item.text} />
             </View>
             <View>
-                <Image styles={styles.tImage} source={{ uri: item.media_url }} />
+                {item.media_url !=="" ?<Image styles={styles.tImage} source={{ uri: item.media_url }} />: null}
             </View>
-            <View  >
+            <View>
                 <Item item={new Date(item.created_at["$date"]).toUTCString()} />
             </View>
-
             <View style={styles.row} >
                 <View style={styles.row}>
                     <Item item={item.user_info.followers_count} />
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
     tinyLogo: {
         width: 50,
         height: 50,
+        borderRadius: 25,
     },
     profile: {
         flex: 1,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     },
     tImage: {
         width: 100,
-        height: 200,
+        height: 100,
     }
 })
 
