@@ -38,25 +38,28 @@ const TagList = ({ tag }) => {
             <Text style={styles.screenName}>{item}</Text>
         </View>
     );
-    const [timeDiff, setTimeDiff] = useState("now")
-    const TimeDiff = ({ item }) => {
-        var timeDiff = null
-        now = new Date().getTime()
-        post_time = item.created_at["$date"]
-        diff = Math.floor(now - post_time) / 1000
+
+    // const [timeDiff, setTimeDiff] = useState()
+
+    const Time = ( item ) => {
+        var now = new Date().getTime()
+        var post_time = parseInt(item.created_at["$date"])
+        var diff = Math.floor(now - post_time) / 1000
+        console.log(now, post_time, diff)
         if (0 <= diff < 60) {
-            setTimeDiff("now");
+            return "posted just now";
         }
         else if (60 < diff < 3600) {
-            setTimeDiff(Math.floor(diff / 60) + "min" + "ago");
+            return "posted" + Math.floor(diff / 60) + "min" + "ago";
         }
-        else if (3600 <= diff <= 86400) {
-            setTimeDiff(Math.floor(diff / 3660) + "hour" + "ago");
+        else if (3600 <= diff < 86400) {
+            return "posted" + Math.floor(diff / 3660) + "hour" + "ago";
         }
         else {
-            setTimeDiff(item.created_at["$date"].toUTCString())
+            return "posted" + item.created_at["$date"].toUTCString();
         }
     }
+    
 
     const renderItem = ({ item }) => (
         <View style={[styles.item, styles.elevation]}>
@@ -75,11 +78,11 @@ const TagList = ({ tag }) => {
             <View>
                 {item.media_url !== "" ? <Image styles={styles.tImage} source={{ uri: item.media_url }} /> : null}
             </View>
-            <View>
+            {/* <View>
                 <Item item={new Date(item.created_at["$date"]).toUTCString()} />
-            </View>
+            </View> */}
             <View>
-                <Text>{timeDiff}</Text>
+                <Text style={styles.text}>{Time(item)}</Text>
             </View>
             <View style={styles.row} >
                 <View style={styles.row}>
@@ -131,6 +134,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: '#000022',
+        marginLeft:15,
     },
     tinyLogo: {
         width: 50,

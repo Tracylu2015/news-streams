@@ -52,26 +52,27 @@ def tags(request, tag):
     # para is a url parameter passed from frontend
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
-    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort({
-        "created_at.$date": {
-            "order": "desc"
-        }
-    },
+    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort(
+        # {
+        #     "created_at.$date": {
+        #         "order": "desc"
+        #     }
+        # },
         {
-        "user_info.friends_count": {
-            "order": "desc"
-        }
-    },
+            "user_info.friends_count": {
+                "order": "desc"
+            }
+        },
         {
-        "user_info.followers_count": "desc"
-    },
+            "user_info.followers_count": "desc"
+        },
         "_score")
     response = s.execute()
     # a list of post_id return from elastic search
     data = []
     for hit in response:
         data.append(hit.post_id)
-    if len(data)> 30:
+    if len(data) > 30:
         data = data[:30]
     posts = SocialPost.objects(post_id__in=data)
 
