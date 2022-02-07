@@ -44,22 +44,20 @@ const TagList = ({ tag }) => {
     const Time = ( item ) => {
         var now = new Date().getTime()
         var post_time = parseInt(item.created_at["$date"])
-        var diff = Math.floor(now - post_time) / 1000
-        console.log(now, post_time, diff)
-        if (0 <= diff < 60) {
+        var diff = Math.floor((now - post_time) / 1000)
+        if (0 <= diff && diff < 60) {
+            console.log(now, post_time, diff)
             return "posted just now";
-        }
-        else if (60 < diff < 3600) {
-            return "posted" + Math.floor(diff / 60) + "min" + "ago";
-        }
-        else if (3600 <= diff < 86400) {
-            return "posted" + Math.floor(diff / 3660) + "hour" + "ago";
-        }
-        else {
-            return "posted" + item.created_at["$date"].toUTCString();
+        } else if (60 < diff  && diff < 3600) {
+            return "posted " + Math.floor(diff / 60) + " mins ago";
+        } else if (3600 <= diff && diff < 86400) {
+            return "posted " + Math.floor(diff / 3660) + " hours ago";
+        } else {
+            post_time =new Date(item.created_at["$date"]).toDateString()
+            return post_time;
         }
     }
-    
+
 
     const renderItem = ({ item }) => (
         <View style={[styles.item, styles.elevation]}>

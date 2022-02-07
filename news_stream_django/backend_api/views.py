@@ -53,11 +53,6 @@ def tags(request, tag):
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
     s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort(
-        # {
-        #     "created_at.$date": {
-        #         "order": "desc"
-        #     }
-        # },
         {
             "user_info.friends_count": {
                 "order": "desc"
@@ -70,10 +65,14 @@ def tags(request, tag):
     response = s.execute()
     # a list of post_id return from elastic search
     data = []
+    seen = set()
     for hit in response:
-        data.append(hit.post_id)
-    if len(data) > 30:
-        data = data[:30]
+        if hit.post_id not in seen:
+            seen.add(hit.post_id)
+            data.append(hit.post_id)
+
+    if len(data) > 50:
+        data = data[:50]
     posts = SocialPost.objects(post_id__in=data)
 
     result = []
