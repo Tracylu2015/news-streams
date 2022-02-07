@@ -17,7 +17,7 @@ const App = () => {
         <Stack.Screen name="Home" component={TrendScreen} options={{
           title: 'Top Trending',
           headerStyle: {
-            backgroundColor: "rgb(29, 155, 240)",
+            backgroundColor: '#4a99e9',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -28,7 +28,7 @@ const App = () => {
         <Stack.Screen name="Tweets" component={TweetScreen} options={{
           title: 'Hot Tweets',
           headerStyle: {
-            backgroundColor: "rgb(29, 155, 240)",
+            backgroundColor: '#4a99e9',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {

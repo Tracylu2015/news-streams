@@ -1,12 +1,13 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView} from 'react-native';
 import TrendList from './TrendList';
 
 
 function TrendScreen({ navigation }) {
+
+
     return (
-        <SafeAreaView
-            contentInsetAdjustmentBehavior="automatic">
+        <SafeAreaView contentInsetAdjustmentBehavior="automatic">
             <TrendList navigation={navigation} />
         </SafeAreaView>
     );

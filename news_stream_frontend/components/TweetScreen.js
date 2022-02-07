@@ -1,14 +1,14 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView} from 'react-native';
 import TagList from './TagList';
 
 function TweetScreen({ navigation, route }) {
 
-    const {tag} = route.params
+    const { tag } = route.params
 
     return (
         <SafeAreaView contentInsetAdjustmentBehavior="automatic">
-            <TagList navigation={navigation} tag= {tag}/>
+            <TagList navigation={navigation} tag={tag} />
         </SafeAreaView>
     );
 }
