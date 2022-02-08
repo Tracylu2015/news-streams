@@ -45,6 +45,11 @@ const TagList = ({ tag }) => {
         </View>
     );
 
+    const Location = ({ item }) => (
+        <View style={styles.item}>
+            <Text style={{ fontSize: 12, color: '#4a99e9' }}>{item}</Text>
+        </View>
+    );
 
     const Time = (item) => {
         var now = new Date().getTime()
@@ -74,6 +79,15 @@ const TagList = ({ tag }) => {
                 <View>
                     {item.user_info.verified === true ? <Image style={styles.icon} source={require("./images/verified.png")} /> : null}
                 </View>
+            </View>
+            <View >
+                {item.user_info.hasOwnProperty("location")
+                    ?
+                    <View style={styles.row}>
+                        <Image style={styles.pin} source={require("./images/pin.png")} />
+                        <Location item={item.user_info.location} />
+                    </View>
+                    : null}
             </View>
             <View>
                 <Item item={item.text} />
@@ -167,7 +181,12 @@ const styles = StyleSheet.create({
     tImage: {
         width: 100,
         height: 100,
-    }
+    },
+    pin: {
+        width: 20,
+        height: 20,
+        marginLeft: 16,
+    },
 })
 
 export default TagList;
