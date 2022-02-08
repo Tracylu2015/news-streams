@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, FlatList, StyleSheet, Text, Image, RefreshControl } from "react-native";
+import { View, FlatList, StyleSheet, Text, Image, RefreshControl, Pressable, Linking } from "react-native";
 
 
 
@@ -68,50 +68,67 @@ const TagList = ({ tag }) => {
         }
     }
 
+    const info = (item) => {
+        let username = item.user_info.screen_name
+        let UserProfileURL = `https://twitter.com/${username}`
+        Linking.openURL(UserProfileURL)
+
+    }
+
+    const toOriginal = (item) => {
+        let postId = item.post_id
+        let OriginalURL = `https://twitter.com/i/web/status/${postId}`
+        Linking.openURL(OriginalURL)
+    }
+
 
     const renderItem = ({ item }) => (
         <View style={[styles.item, styles.elevation]}>
-            <View style={styles.profile}>
-                <Image style={styles.tinyLogo} source={{ uri: item.user_info.profile_image_url }} />
-                <View>
-                    <ProfileItem item={item.user_info.screen_name} />
-                </View>
-                <View>
-                    {item.user_info.verified === true ? <Image style={styles.icon} source={require("./images/verified.png")} /> : null}
-                </View>
-            </View>
-            <View >
-                {item.user_info.hasOwnProperty("location")
-                    ?
-                    <View style={styles.row}>
-                        <Image style={styles.pin} source={require("./images/pin.png")} />
-                        <Location item={item.user_info.location} />
+            <Pressable onPress={() => info(item)}>
+                <View style={styles.profile}>
+                    <Image style={styles.tinyLogo} source={{ uri: item.user_info.profile_image_url }} />
+                    <View>
+                        <ProfileItem item={item.user_info.screen_name} />
                     </View>
-                    : null}
-            </View>
-            <View>
-                <Item item={item.text} />
-            </View>
-            <View>
-                {item.media_url !== "" ? <Image styles={styles.tImage} source={{ uri: item.media_url }} /> : null}
-            </View>
-            <View>
-                <Text style={styles.text}>{Time(item)}</Text>
-            </View>
-            <View style={styles.row} >
-                <View style={styles.row}>
-                    <Item item={item.user_info.followers_count} />
-                    <Text style={styles.text}>
-                        followers
-                    </Text>
-                </View >
-                <View style={styles.row}>
-                    <Item item={item.user_info.friends_count} />
-                    <Text style={styles.text}>
-                        friends
-                    </Text>
+                    <View>
+                        {item.user_info.verified === true ? <Image style={styles.icon} source={require("./images/verified.png")} /> : null}
+                    </View>
                 </View>
-            </View>
+            </Pressable>
+            <Pressable onPress={() => toOriginal(item)}>
+                <View >
+                    {item.user_info.hasOwnProperty("location")
+                        ?
+                        <View style={styles.row}>
+                            <Image style={styles.pin} source={require("./images/pin.png")} />
+                            <Location item={item.user_info.location} />
+                        </View>
+                        : null}
+                </View>
+                <View>
+                    <Item item={item.text} />
+                </View>
+                <View>
+                    {item.hasOwnProperty("media_url") ? <Image styles={styles.tImage} source={{ uri: item.media_url }} /> : null}
+                </View>
+                <View>
+                    <Text style={styles.text}>{Time(item)}</Text>
+                </View>
+                <View style={styles.row} >
+                    <View style={styles.row}>
+                        <Item item={item.user_info.followers_count} />
+                        <Text style={styles.text}>
+                            followers
+                        </Text>
+                    </View >
+                    <View style={styles.row}>
+                        <Item item={item.user_info.friends_count} />
+                        <Text style={styles.text}>
+                            friends
+                        </Text>
+                    </View>
+                </View>
+            </Pressable >
         </View>
     );
 
@@ -126,6 +143,7 @@ const TagList = ({ tag }) => {
             data={tweet}
             renderItem={renderItem}
             keyExtractor={item => item.post_id}
+            onPress={() => Linking.openURL(UserProfileURL)}
         />
     );
 };
@@ -179,8 +197,8 @@ const styles = StyleSheet.create({
         top: 2,
     },
     tImage: {
-        width: 100,
-        height: 100,
+        width: 360,
+        height: 360,
     },
     pin: {
         width: 20,
