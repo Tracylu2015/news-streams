@@ -152,6 +152,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+        // Release keystore configuration. Only needed when releasing to Play store
+        // release {
+        //     storeFile file('news_stream.keystore')
+        //     storePassword System.console().readLine("\nKeystore password:")
+        //     keyAlias System.console().readLine("\nAlias: ")
+        //     keyPassword System.console().readLine("\Alias password: ")
+        // }
     }
     buildTypes {
         debug {
