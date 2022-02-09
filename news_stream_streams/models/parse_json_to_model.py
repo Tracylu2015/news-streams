@@ -5,11 +5,11 @@ from dateutil import parser
 from models.social_post_model import SocialPost
 
 TOP_LEVEL_KEYS = {'created_at', 'id', 'text', 'user', 'entities',
-                  'reply_count', 'retweet_count', 'favorite_count', 'retweeted_status'}
+                  'reply_count', 'retweet_count', 'favorite_count', 'retweeted_status','quoted_status'}
 USER_LEVEL_KEYS = {'id', 'screen_name', 'location', 'verified',
                    'followers_count', 'friends_count', 'profile_image_url'}
 ENTITIES_LEVEL_KEYS = {'hashtags', 'user_mentions'}
-CLEANUP_KEYS = ['id', 'user', 'entities', 'retweeted_status']
+CLEANUP_KEYS = ['id', 'user', 'entities', 'retweeted_status', 'quoted_status']
 
 
 def parse_twitter_stream(jsonObj):
@@ -42,8 +42,7 @@ def parse_twitter_stream(jsonObj):
     else:
         data["original_url"] = ""
 
-    medias = data.get("retweeted_status", {}).get(
-        "quoted_status", {}).get("entities", {}).get("media", [])
+    medias = data.get("quoted_status", {}).get("entities", {}).get("media", [])
     for m in medias:
         media_url = m.get("media_url_https", "")
         if not media_url:
