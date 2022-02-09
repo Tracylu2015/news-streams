@@ -54,15 +54,8 @@ def tags(request, tag):
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
     s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort(
-        {
-            "user_info.friends_count": {
-                "order": "desc"
-            }
-        },
-        {
-            "user_info.followers_count": "desc"
-        },
-        "_score")[:100]
+        {"user_info.friends_count": "desc"}, {"user_info.followers_count": "desc"}, {"created_at.$date": "desc"}, "_score")[:100]
+        
     response = s.execute()
     # a list of post_id return from elastic search
     data = []
