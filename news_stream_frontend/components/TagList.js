@@ -16,8 +16,8 @@ const TagList = ({ tag }) => {
         const url = `${baseUrl}/api/tags/${tag}`;
         const fetchTrends = async () => {
             try {
-                const response = await axios.get(url, { cancelToken: source.token });
                 setRefresh(true)
+                const response = await axios.get(url, { cancelToken: source.token });
                 setTweet([...response.data])
 
             } catch (error) {
@@ -73,7 +73,6 @@ const TagList = ({ tag }) => {
         let username = item.user_info.screen_name
         let UserProfileURL = `https://twitter.com/${username}`
         Linking.openURL(UserProfileURL)
-
     }
 
     const toOriginal = (item) => {
@@ -110,7 +109,9 @@ const TagList = ({ tag }) => {
                     <Item item={item.text} />
                 </View>
                 <View>
-                    {item.hasOwnProperty("media_url") ? <Image styles={styles.tImage} source={{ uri: item.media_url }} /> : null}
+                    {item.hasOwnProperty("media_url") 
+                    ? <Image style={styles.tImage} source={{ uri: item.media_url }} /> 
+                    : null}
                 </View>
                 <View>
                     <Text style={styles.text}>{Time(item)}</Text>
@@ -134,6 +135,7 @@ const TagList = ({ tag }) => {
     );
 
     return (
+
         <FlatList
             refreshControl={
                 <RefreshControl
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
     },
     tImage: {
         width: 360,
-        height: 360,
+        height: 200,
         marginLeft: 12,
     },
     pin: {
