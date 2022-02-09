@@ -42,7 +42,11 @@ def parse_twitter_stream(jsonObj):
     else:
         data["original_url"] = ""
 
-    medias = data.get("extended_tweet", {}).get("entities", {}).get("media", [])
+    medias = []
+    medias.extend(data.get("extended_tweet", {}).get("entities", {}).get("media", []))
+    medias.extend(data.get('retweeted_status', {}).get("entities", {}).get("media", []))
+    medias.extend(data.get('quoted_status', {}).get("entities", {}).get("media", []))
+    
     for m in medias:
         media_url = m.get("media_url_https", "")
         if not media_url:
