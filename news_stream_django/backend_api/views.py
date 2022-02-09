@@ -8,7 +8,7 @@ import socket
 from django.http.response import JsonResponse
 from pymemcache.client.hash import HashClient
 from elasticsearch import Elasticsearch
-from elasticsearch_dsl import Search, Q
+from elasticsearch_dsl import Search
 import os
 
 # Create your views here.
@@ -53,7 +53,7 @@ def tags(request, tag):
     # para is a url parameter passed from frontend
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
-    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).filter('bool', must=[Q('exists', field="medial_url")]).sort(
+    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort(
         {
             "user_info.friends_count": {
                 "order": "desc"
