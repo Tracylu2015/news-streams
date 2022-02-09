@@ -143,7 +143,7 @@ const TagList = ({ tag }) => {
                 />}
             data={tweet}
             renderItem={renderItem}
-            keyExtractor={item => item.post_id}
+            keyExtractor={(item, index) => index}
             onPress={() => Linking.openURL(UserProfileURL)}
         />
     );
