@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#000022',
         marginLeft: 15,
+        marginTop: 5,
     },
     tinyLogo: {
         width: 50,
@@ -200,6 +201,7 @@ const styles = StyleSheet.create({
     tImage: {
         width: 360,
         height: 360,
+        marginLeft: 12,
     },
     pin: {
         width: 20,

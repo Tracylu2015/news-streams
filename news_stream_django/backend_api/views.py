@@ -1,4 +1,5 @@
 import collections
+from genericpath import exists
 import json
 import logging
 import os
@@ -7,7 +8,7 @@ import socket
 from django.http.response import JsonResponse
 from pymemcache.client.hash import HashClient
 from elasticsearch import Elasticsearch
-from elasticsearch_dsl import Search
+from elasticsearch_dsl import Search, Q
 import os
 
 # Create your views here.
@@ -52,7 +53,7 @@ def tags(request, tag):
     # para is a url parameter passed from frontend
     s = Search(using=es, index="tstream-post-*")
     # TODO: only project post_id
-    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).sort(
+    s = s.query("simple_query_string", query=tag, fields=['title', 'text']).filter('bool', must=[Q('exists', field="medial_url")]).sort(
         {
             "user_info.friends_count": {
                 "order": "desc"
@@ -70,7 +71,7 @@ def tags(request, tag):
         if hit.post_id not in seen:
             seen.add(hit.post_id)
             data.append(hit.post_id)
-
+    print(data)
     posts = SocialPost.objects(post_id__in=data)
 
     result = []
