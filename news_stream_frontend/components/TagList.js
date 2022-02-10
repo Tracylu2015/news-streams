@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { View, FlatList, StyleSheet, Text, Image, RefreshControl, Pressable, Linking } from "react-native";
-
 
 
 const TagList = ({ tag }) => {
@@ -11,27 +9,24 @@ const TagList = ({ tag }) => {
     const [refresh, setRefresh] = useState(false)
     const [onPull, setOnPull] = useState(false)
 
+    const getTweets = async () => {
+        try {
+            setRefresh(true)
+            const response = await
+                fetch(`${baseUrl}/api/tags/${tag}`)
+            const json = await response.json()
+            setTweet(json)
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setRefresh(false)
+        }
+    }
     useEffect(() => {
-        const source = axios.CancelToken.source();
-        const url = `${baseUrl}/api/tags/${tag}`;
-        const fetchTrends = async () => {
-            try {
-                setRefresh(true)
-                const response = await axios.get(url, { cancelToken: source.token });
-                setTweet([...response.data])
-
-            } catch (error) {
-                if (axios.isCancel(error)) {
-                    console.log('Data fetching cancelled');
-                }
-            }
-            finally {
-                setRefresh(false)
-            }
-        };
-        fetchTrends();
-        return () => source.cancel("Data fetching cancelled");
+        getTweets();
+        console.log("refresh")
     }, [tag, onPull]);
+
 
     const Item = ({ item }) => (
         <View style={styles.item}>
@@ -56,7 +51,6 @@ const TagList = ({ tag }) => {
         var post_time = parseInt(item.created_at["$date"])
         var diff = Math.floor((now - post_time) / 1000)
         if (0 <= diff && diff < 60) {
-            console.log(now, post_time, diff)
             return "posted just now";
         } else if (60 < diff && diff < 3600) {
             return "posted " + Math.floor(diff / 60) + " mins ago";
@@ -109,9 +103,9 @@ const TagList = ({ tag }) => {
                     <Item item={item.text} />
                 </View>
                 <View>
-                    {item.hasOwnProperty("media_url") 
-                    ? <Image style={styles.tImage} source={{ uri: item.media_url }} /> 
-                    : null}
+                    {item.hasOwnProperty("media_url")
+                        ? <Image style={styles.tImage} source={{ uri: item.media_url }} />
+                        : null}
                 </View>
                 <View>
                     <Text style={styles.text}>{Time(item)}</Text>

@@ -153,13 +153,12 @@ android {
             keyPassword 'android'
         }
 
-        // Release keystore configuration. Only needed when releasing to Play store
-        // release {
-        //     storeFile file('news_stream.keystore')
-        //     storePassword System.console().readLine("\nKeystore password:")
-        //     keyAlias System.console().readLine("\nAlias: ")
-        //     keyPassword System.console().readLine("\Alias password: ")
-        // }
+        release {
+            storeFile file('news_stream.keystore')
+            storePassword 'rootroot'
+            keyAlias 'news_stream'
+            keyPassword 'rootroot'
+        }
     }
     buildTypes {
         debug {
@@ -173,7 +172,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
