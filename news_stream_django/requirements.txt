@@ -1,6 +1,6 @@
 asgiref==3.5.0
 certifi==2021.10.8
-Django==3.2.11
+Django==3.2.12
 django-mongoengine==0.4.6
 django-prometheus==2.2.0
 elasticsearch==7.17.0
